@@ -42,5 +42,18 @@ describe EventMerger do
       expect(@example_2[1].keys).to eq(%i(date a b c d e f))
       expect(@example_2[2].keys).to eq (%i(date m n o g))
     end
+
+    it "should raise an ArgumentError if arguments aren't in an Array" do 
+      expect{ EventMerger.merge!("False") }.to raise_error(ArgumentError)
+    end
+
+    it "should raise an ArgumentError if the Events aren't in a hash" do 
+      expect { EventMerger.merge!(["false"])}.to raise_error(ArgumentError)
+    end
+
+    it "should return a message if no dates provided" do
+      @output = EventMerger.merge!([{d: 1}, {m: 2}])
+      expect(@output).to eq("No dates provided")
+    end 
   end 
 end
